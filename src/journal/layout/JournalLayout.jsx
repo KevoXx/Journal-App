@@ -1,6 +1,8 @@
 import { Box } from '@mui/material'
 import PropTypes from 'prop-types'
 
+const drawerWidth = 240;
+
 function JournalLayout({children}) {
   return (
     <Box
