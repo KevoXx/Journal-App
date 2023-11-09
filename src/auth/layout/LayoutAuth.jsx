@@ -5,7 +5,6 @@ function LayoutAuth() {
   return (
     <Grid
       container
-      spacing={0}
       direction='column'
       alignItems='center'
       justifyContent='center'
@@ -18,7 +17,7 @@ function LayoutAuth() {
         item
         xs={3}
         sx={{
-          width: { md: '50%', sm: '80%', xs: '100%' },
+          width: {lg:'30%', md: '40%', sm: '70%', xs: '90%' },
           bgcolor: 'white',
           padding: 3,
           borderRadius: 2,
