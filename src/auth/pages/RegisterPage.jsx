@@ -14,7 +14,7 @@ const formValidations = {
     (value) => value.length >= 6,
     'La contraseña debe tener al menos 6 caracteres',
   ],
-  displayName: [(value) => value.trim().length > 0, 'El nombre es requerido'],
+  displayName: [(value) => value.trim().length > 0, 'El nombre es obligatorio'],
 }
 
 function RegisterPage() {
@@ -30,7 +30,7 @@ function RegisterPage() {
     passwordValid,
   } = useForm(formData, formValidations)
 
-  console.log(displayNameValid, emailValid, passwordValid, isFormValid)
+  
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -41,7 +41,9 @@ function RegisterPage() {
       <Typography variant='h5' align='center'>
         Sign Up
       </Typography>
-
+      <Typography>
+        Form {isFormValid ? 'valido' : 'Incompleto'}
+      </Typography>
       <form onSubmit={onSubmit}>
         <Grid container sx={{ padding: '20px' }}>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -54,8 +56,8 @@ function RegisterPage() {
               name='displayName'
               value={displayName}
               onChange={onInputChange}
-              error
-              helperText='El nombre es requerido'
+              error={!!displayNameValid}
+              helperText={displayNameValid}
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -67,6 +69,8 @@ function RegisterPage() {
               name='email'
               value={email}
               onChange={onInputChange}
+              error={!!emailValid}
+              helperText={emailValid}
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -78,6 +82,8 @@ function RegisterPage() {
               name='password'
               value={password}
               onChange={onInputChange}
+              error={!!passwordValid}
+              helperText={passwordValid}
             />
           </Grid>
           <Grid container spacing={2} sx={{ my: 2 }}>
