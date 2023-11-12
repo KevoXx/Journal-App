@@ -1,11 +1,14 @@
 import { Button, Grid, Link, TextField, Typography } from '@mui/material'
 import { Link as LinkRouter } from 'react-router-dom'
 import { useForm } from '../../hooks/useForm'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { startEmailPasswordRegister } from '../../store/auth'
 
 const formData = {
-  email: 'kevo@gmail.com',
-  password: '123456',
-  displayName: 'Kevin',
+  email: '',
+  password: '',
+  displayName: '',
 }
 
 const formValidations = {
@@ -18,31 +21,31 @@ const formValidations = {
 }
 
 function RegisterPage() {
+  const dispatch = useDispatch()
+  const [formSubmitted, setFormSubmitted] = useState(false)
+
   const {
     formState,
     displayName,
     email,
     password,
     onInputChange,
-    isFormValid,
     displayNameValid,
     emailValid,
     passwordValid,
+    isFormValid,
   } = useForm(formData, formValidations)
-
-  
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(formState)
+    setFormSubmitted(true)
+    if (!isFormValid) return
+    dispatch(startEmailPasswordRegister(formState))
   }
   return (
     <>
       <Typography variant='h5' align='center'>
         Sign Up
-      </Typography>
-      <Typography>
-        Form {isFormValid ? 'valido' : 'Incompleto'}
       </Typography>
       <form onSubmit={onSubmit}>
         <Grid container sx={{ padding: '20px' }}>
@@ -56,7 +59,7 @@ function RegisterPage() {
               name='displayName'
               value={displayName}
               onChange={onInputChange}
-              error={!!displayNameValid}
+              error={!!displayNameValid && formSubmitted}
               helperText={displayNameValid}
             />
           </Grid>
@@ -69,7 +72,7 @@ function RegisterPage() {
               name='email'
               value={email}
               onChange={onInputChange}
-              error={!!emailValid}
+              error={!!emailValid && formSubmitted}
               helperText={emailValid}
             />
           </Grid>
@@ -79,10 +82,11 @@ function RegisterPage() {
               label='Password'
               variant='outlined'
               placeholder='Enter your password'
+              type='password'
               name='password'
               value={password}
               onChange={onInputChange}
-              error={!!passwordValid}
+              error={!!passwordValid && formSubmitted}
               helperText={passwordValid}
             />
           </Grid>
