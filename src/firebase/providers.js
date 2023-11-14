@@ -46,7 +46,12 @@ export const registerWithEmailPassword = async ({
       password
     )
     const { uid, photoURL } = res.user
-    console.log(res)
+
+    await updateProfile(res.user, {
+      displayName,
+      photoURL,
+    })
+
     return {
       ok: true,
       displayName,
