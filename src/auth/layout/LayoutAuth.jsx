@@ -1,7 +1,14 @@
 import { Grid } from '@mui/material'
-import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Navigate, Outlet } from 'react-router-dom'
 
 function LayoutAuth() {
+  const { status } = useSelector((state) => state.auth)
+
+  if (status === 'authenticated') {
+    return <Navigate to='/' />
+  }
+
   return (
     <Grid
       container
@@ -17,7 +24,7 @@ function LayoutAuth() {
         item
         xs={3}
         sx={{
-          width: {lg:'30%', md: '40%', sm: '70%', xs: '90%' },
+          width: { lg: '30%', md: '40%', sm: '70%', xs: '90%' },
           bgcolor: 'white',
           padding: 3,
           borderRadius: 2,

@@ -10,7 +10,8 @@ function NoteView() {
       justifyContent='space-between'
       sx={{
         mb: 1,
-      }}>
+      }}
+      className='animate__animated animate__fadeIn animate__faster'>
       <Grid item>
         <Typography fontSize={39} fontWeight='light'>
           7 de Noviembre de 2023

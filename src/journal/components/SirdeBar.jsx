@@ -13,6 +13,7 @@ import {
   Typography,
 } from '@mui/material'
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
 
 const meses = [
   {
@@ -66,6 +67,7 @@ const meses = [
 ]
 
 function SirdeBar({ drawerWidth }) {
+  const { displayName } = useSelector((state) => state.auth)
   return (
     <Box
       component={'nav'}
@@ -86,7 +88,7 @@ function SirdeBar({ drawerWidth }) {
         }}>
         <Toolbar>
           <Typography variant='h6' noWrap component='div'>
-            Kevo Journal
+            {displayName || 'Journal'}
           </Typography>
         </Toolbar>
         <Divider />

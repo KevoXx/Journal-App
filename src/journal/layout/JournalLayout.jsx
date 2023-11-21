@@ -1,15 +1,24 @@
 import { Box, Toolbar } from '@mui/material'
 import PropTypes from 'prop-types'
-import { NavBar, SideBar } from '../components';
+import { NavBar, SideBar } from '../components'
+import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
-function JournalLayout({children}) {
+function JournalLayout({ children }) {
+  const { status } = useSelector((state) => state.auth)
+
+  if (status === 'unauthenticated') {
+    return <Navigate to='/auth/login' />
+  }
+
   return (
     <Box
       sx={{
         display: 'flex',
-      }}>
+      }}
+      className='animate__animated animate__fadeIn animate__faster'>
       <NavBar drawerWidth={drawerWidth} />
 
       <SideBar drawerWidth={drawerWidth} />
