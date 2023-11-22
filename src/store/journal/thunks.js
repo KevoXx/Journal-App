@@ -6,6 +6,7 @@ import {
   setActiveNote,
   setNotes,
   setSaving,
+  updateNote,
 } from './'
 import { loadNotes } from '../../helpers'
 
@@ -57,7 +58,8 @@ export const startSaveNote = (/* params */) => {
     delete noteToSave.id
 
     const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`)
-
     await setDoc(docRef, noteToSave, { merge: true })
+
+    dispatch(updateNote(note))
   }
 }
