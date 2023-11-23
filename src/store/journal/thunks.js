@@ -5,10 +5,11 @@ import {
   isCreatingNewNote,
   setActiveNote,
   setNotes,
+  setPhotoToActiveNote,
   setSaving,
   updateNote,
 } from './'
-import { loadNotes } from '../../helpers'
+import { fileUpload, loadNotes } from '../../helpers'
 
 export const startNewNote = (/* params */) => {
   return async (dispatch, getState) => {
@@ -61,5 +62,21 @@ export const startSaveNote = (/* params */) => {
     await setDoc(docRef, noteToSave, { merge: true })
 
     dispatch(updateNote(note))
+  }
+}
+
+export const startUploadingFiles = (files = []) => {
+  return async (dispatch) => {
+    dispatch(setSaving())
+
+    const fileUploadPromises = []
+
+    for (const file of files) {
+      fileUploadPromises.push(fileUpload(file))
+    }
+
+    const photosUrls = await Promise.all(fileUploadPromises)
+
+    dispatch(setPhotoToActiveNote(photosUrls))
   }
 }
