@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useMemo } from 'react'
 
 const formData = {
-  email: 'kevo@gmail.com',
-  password: '123456',
+  email: '',
+  password: '',
 }
 
 function LoginPage() {
