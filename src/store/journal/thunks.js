@@ -1,7 +1,8 @@
-import { collection, doc, setDoc } from 'firebase/firestore/lite'
+import { collection, deleteDoc, doc, setDoc } from 'firebase/firestore/lite'
 import { FirebaseDB } from '../../firebase/config'
 import {
   addNewEmptyNote,
+  deleteNoteById,
   isCreatingNewNote,
   setActiveNote,
   setNotes,
@@ -78,5 +79,21 @@ export const startUploadingFiles = (files = []) => {
     const photosUrls = await Promise.all(fileUploadPromises)
 
     dispatch(setPhotoToActiveNote(photosUrls))
+  }
+}
+
+
+export const startDeletingNote = () => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth
+    if (!uid) throw new Error('UID not found')
+
+    const { active: note } = getState().journal
+
+    const docRef = doc(FirebaseDB, `${uid}/journal/notes/${note.id}`)
+    const resp = await deleteDoc(docRef)
+    console.log(resp)
+
+    dispatch(deleteNoteById(note.id))
   }
 }

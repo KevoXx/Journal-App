@@ -1,10 +1,19 @@
-import { SaveOutlined, UploadOutlined } from '@mui/icons-material'
+import {
+  DeleteOutlined,
+  SaveOutlined,
+  UploadOutlined,
+} from '@mui/icons-material'
 import { Button, Grid, IconButton, TextField, Typography } from '@mui/material'
 import { ImageGallery } from '../components'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from '../../hooks/useForm'
 import { useEffect, useMemo, useRef } from 'react'
-import { setActiveNote, startSaveNote, startUploadingFiles } from '../../store/journal'
+import {
+  setActiveNote,
+  startDeletingNote,
+  startSaveNote,
+  startUploadingFiles,
+} from '../../store/journal'
 import Swal from 'sweetalert2'
 import 'sweetalert2/dist/sweetalert2.css'
 
@@ -46,6 +55,23 @@ function NoteView() {
     if (target.files.length === 0) return
 
     dispatch(startUploadingFiles(target.files))
+  }
+
+  const onDelete = () => {
+    Swal.fire({
+      title: '¿Estas seguro?',
+      text: 'Esta accion no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(startDeletingNote())
+
+        Swal.fire('Borrado', 'Nota borrada', 'success')
+      }
+    })
   }
 
   return (
@@ -119,7 +145,19 @@ function NoteView() {
           onChange={onInputChange}
         />
       </Grid>
-      <ImageGallery images = {note.imageUrls} />
+      <Grid container justifyContent='end'>
+        <IconButton
+          color='error'
+          onClick={onDelete}
+          sx={{
+            my: 1,
+          }}>
+          <DeleteOutlined />
+          <Typography variant='h6'>Borrar</Typography>
+        </IconButton>
+      </Grid>
+
+      <ImageGallery images={note.imageUrls} />
     </Grid>
   )
 }
