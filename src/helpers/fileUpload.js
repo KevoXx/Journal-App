@@ -1,5 +1,6 @@
 export const fileUpload = async (file) => {
-  if (!file) throw new Error('File is required')
+  // if (!file) throw new Error('File is required')
+  if (!file) return null
 
   const cloudUrl = 'https://api.cloudinary.com/v1_1/dcuvlur36/upload'
 
