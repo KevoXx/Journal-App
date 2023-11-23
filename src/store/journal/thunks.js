@@ -21,6 +21,7 @@ export const startNewNote = (/* params */) => {
     const newNote = {
       title: '',
       body: '',
+      imageUrls: [],
       date: new Date().getTime(),
     }
 
@@ -81,7 +82,6 @@ export const startUploadingFiles = (files = []) => {
     dispatch(setPhotoToActiveNote(photosUrls))
   }
 }
-
 
 export const startDeletingNote = () => {
   return async (dispatch, getState) => {
